@@ -1,0 +1,2 @@
+class CbSettingsModuleNotDefined(Exception):
+    pass
