@@ -14,7 +14,6 @@ settings_module = __import__(CBSETTINGS_MODULE, fromlist=[''])
 
 
 def default_factory():
-    print os.environ
     # TODO: Better way to do this than checking type?
     config_classes = [cls for name, cls in vars(settings_module).items() if
         inspect.isclass(cls) and issubclass(cls, Conf) and cls is not Conf]
