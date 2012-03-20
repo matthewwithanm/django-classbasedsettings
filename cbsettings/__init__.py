@@ -31,7 +31,7 @@ def configure(factory=None, **kwargs):
         djsettings.configure(**settings_dict)
 
         # We need to return the module so that it can be passed to execute_manager in manage.py. But should we use module of settings class or factory? THERE'S GOT TO BE A BETTER WAY!!
-        return mod, settings_obj
+        return import_module(settings_obj.__class__.__module__), settings_obj
     else:
         raise InvalidSettingsFactory('%s is not a valid settings factory.'
             ' Please provide something of the form'
