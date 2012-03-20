@@ -3,6 +3,7 @@ from django.utils.importlib import import_module
 import re
 import os
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
+from .switching import switcher
 
 
 ENVIRONMENT_VARIABLE = 'DJANGO_SETTINGS_FACTORY'
