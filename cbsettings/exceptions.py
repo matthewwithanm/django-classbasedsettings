@@ -1,2 +1,6 @@
-class CbSettingsModuleNotDefined(Exception):
+class SettingsFactoryDoesNotExist(Exception):
+    pass
+
+
+class InvalidSettingsFactory(Exception):
     pass
