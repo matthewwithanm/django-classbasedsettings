@@ -63,6 +63,8 @@ creates for you is to nest all the variables in a class::
             }
         }
 
+        # etc, etc
+
 Notice that the class extends ``DjangoDefaults``. By inheriting from this class,
 you get all the default settings values that Django normally composites your
 settings with. (These are pulled in from ``django.conf.global_settings`` so
@@ -75,6 +77,8 @@ also do stuff like this::
             'my.custom.StaticFileFinder',
         )
 
+        # etc
+
 These are just normal Python classes, so you can do anything you normally can::
 
     class MySettings(DjangoDefaults):
@@ -83,6 +87,8 @@ These are just normal Python classes, so you can do anything you normally can::
         def TEMPLATE_DEBUG(self):
             # Now a subclass can override DEBUG and TEMPLATE_DEBUG will be changed accordingly
             return self.DEBUG
+
+        # etc
 
 
 Using a Settings Factory
