@@ -1,6 +1,5 @@
 from django.conf import settings as djsettings
 from django.utils.importlib import import_module
-import re
 import os
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
 from .switching import switcher
@@ -27,7 +26,7 @@ def configure(factory=None, **kwargs):
 
         settings_obj = factory_obj()
         settings_dict = dict((k, getattr(settings_obj, k)) for k in
-                dir(settings_obj) if re.match(r'^[^_]', str(k)))
+                dir(settings_obj) if not str(k).startswith('_'))
         djsettings.configure(**settings_dict)
 
         # We need to return the module so that it can be passed to execute_manager in manage.py. But should we use module of settings class or factory? THERE'S GOT TO BE A BETTER WAY!!
