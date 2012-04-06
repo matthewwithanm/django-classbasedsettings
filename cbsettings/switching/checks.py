@@ -3,4 +3,5 @@ import socket
 
 
 def check_hostnames(switcher, value):
-    return socket.gethostname() in value
+    hostname = socket.gethostname()
+    return any(fnmatch.fnmatchcase(hostname, pattern) for pattern in value)
