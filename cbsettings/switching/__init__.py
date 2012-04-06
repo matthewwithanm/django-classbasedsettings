@@ -1,6 +1,7 @@
 from django.utils.datastructures import SortedDict
-import socket
-from .exceptions import AlreadyRegistered, InvalidCondition, NoMatchingSettings
+import re
+from ..exceptions import AlreadyRegistered, InvalidCondition, NoMatchingSettings
+from . import checks
 
 
 class NoSwitcher:
@@ -9,12 +10,14 @@ class NoSwitcher:
 
 
 class Switcher(object):
-    checks = dict(
-        hostnames=lambda sw, val: socket.gethostname() in val,
-    )
+    checks = {}
 
     def __init__(self):
         self._registry = SortedDict()
+
+    def add_check(self, name, check):
+        """Adds a checking function to the switcher."""
+        self.checks[name] = check
 
     def evaluate_conditions(self, conditions):
         for condition, value in conditions.items():
@@ -58,3 +61,8 @@ class Switcher(object):
 
 
 switcher = Switcher()
+
+for k, v in vars(checks).items():
+    match = re.match(r'^check_(\w+)$', k)
+    if match and callable(v):
+        switcher.add_check(match.group(1), v)
