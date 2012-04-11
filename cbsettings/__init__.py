@@ -27,6 +27,10 @@ def configure(factory=None, **kwargs):
         settings_obj = factory_obj()
         settings_dict = dict((k, getattr(settings_obj, k)) for k in
                 dir(settings_obj) if not str(k).startswith('_'))
+
+        if 'SETTINGS_MODULE' not in settings_dict:
+            settings_dict['SETTINGS_MODULE'] = factory_module
+
         djsettings.configure(**settings_dict)
 
         return mod, settings_obj
