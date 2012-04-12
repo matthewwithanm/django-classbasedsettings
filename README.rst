@@ -21,13 +21,15 @@ to instead call ``cbsettings.configure``. So your manage.py will look something
 like this::
 
     #!/usr/bin/env python
-    from django.core.management import execute_manager
+    import sys
     import cbsettings
 
-    settings_module, settings_obj = cbsettings.configure('path.to.MySettings')
-
     if __name__ == "__main__":
-        execute_manager(settings_module)
+        cbsettings.configure('path.to.MySettings')
+
+        from django.core.management import execute_from_command_line
+
+        execute_from_command_line(sys.argv)
 
 You'll have to make a similar modification to your wsgi file.
 
@@ -100,13 +102,15 @@ bad as Django's hardcoding of the settings module. That's true. Which is why
 object instance. So your manage.py might instead look like this::
 
     #!/usr/bin/env python
-    from django.core.management import execute_manager
+    import sys
     import cbsettings
 
-    settings_module, settings_obj = cbsettings.configure('path.to.my.settings.factory')
-
     if __name__ == "__main__":
-        execute_manager(settings_module)
+        cbsettings.configure('path.to.my.settings.factory')
+
+        from django.core.management import execute_from_command_line
+
+        execute_from_command_line(sys.argv)
 
 Then, in ``path/to/my/settings.py``::
 
