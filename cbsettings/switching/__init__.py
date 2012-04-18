@@ -19,13 +19,16 @@ class Switcher(object):
         """Adds a checking function to the switcher."""
         self.checks[name] = check
 
-    def evaluate_conditions(self, conditions):
+    def evaluate_conditions(self, simple_checks, conditions):
+        for check in simple_checks:
+            if not check():
+                return False
         for condition, value in conditions.items():
             if not self.checks[condition](self, value):
                 return False
         return True
 
-    def register(self, settings_class=NoSwitcher, **conditions):
+    def register(self, settings_class=NoSwitcher, *simple_checks, **conditions):
         """
         Register a settings class with the switcher. Can be passed the settings
         class to register or be used as a decorator.
@@ -46,15 +49,15 @@ class Switcher(object):
                 raise InvalidCondition('There is no check for the condition'
                         ' "%s"' % condition)
 
-        self._registry[settings_class] = conditions
+        self._registry[settings_class] = [simple_checks, conditions]
 
     def __call__(self):
         """
         Finds the first matching settings class from the registry, and returns
         an instance of it.
         """
-        for settings_class, conditions in self._registry.items():
-            if self.evaluate_conditions(conditions):
+        for settings_class, (simple_checks, conditions) in self._registry.items():
+            if self.evaluate_conditions(simple_checks, conditions):
                 return settings_class()
         raise NoMatchingSettings('No settings classes matched the curent'
                 ' environment.')
