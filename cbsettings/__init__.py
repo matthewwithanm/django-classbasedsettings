@@ -1,6 +1,7 @@
-from django.conf import settings as djsettings
 from django.utils.importlib import import_module
+import imp
 import os
+import sys
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
 from .switching import switcher
 
@@ -29,9 +30,24 @@ def configure(factory=None, **kwargs):
                 dir(settings_obj) if not str(k).startswith('_'))
 
         if 'SETTINGS_MODULE' not in settings_dict:
-            settings_dict['SETTINGS_MODULE'] = factory_module
+            settings_dict['SETTINGS_MODULE'] = '%s_%s_unrolledcbsettings' % (
+                    factory_module, factory_name)
 
-        djsettings.configure(**settings_dict)
+        # Create the settings module.
+        parts = settings_dict['SETTINGS_MODULE'].split('.')
+        for module_name in map(lambda x: '.'.join(x), [parts[0:i + 1] for i in
+                range(len(parts))]):
+            try:
+                module = __import__(module_name, fromlist=[''])
+            except ImportError:
+                module = imp.new_module(module_name)
+                sys.modules[module_name] = module
+
+        # Unroll the settings into a new module.
+        for k, v in settings_dict.items():
+            setattr(module, k, v)
+
+        os.environ['DJANGO_SETTINGS_MODULE'] = settings_dict['SETTINGS_MODULE']
 
         return mod, settings_obj
     else:
