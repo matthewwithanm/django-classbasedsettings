@@ -10,10 +10,14 @@ setup(
     name='django-classbasedsettings',
     description='Use classes to define settings.',
     long_description=read(os.path.join(os.path.dirname(__file__), 'README.rst')),
+    version='0.1.2',
     author='Matthew Tretter',
     author_email='matthew@exanimo.com',
+    url='http://github.com/matthewwithanm/django-classbasedsettings',
+    download_url='http://github.com/matthewwithanm/django-classbasedsettings/tarball/master',
     packages=find_packages(),
     zip_safe=False,
+    keywords=['settings', 'classbased', 'class-based'],
     include_package_data=True,
     classifiers=[
         'Environment :: Web Environment',
@@ -26,7 +30,5 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Topic :: Utilities'
     ],
-    setup_requires=[
-        'versiontools >= 1.8',
-    ],
+    setup_requires=[],
 )

@@ -8,7 +8,7 @@ Installation
 
 The easiest way to install is by using pip::
 
-    pip install -e git://github.com/matthewwithanm/django-classbasedsettings.git#egg=django-classbasedsettings
+    pip install django-classbasedsettings
 
 However you can also just drop the "cbsettings" folder into your pythonpath.
 
