@@ -21,7 +21,9 @@ class Switcher(object):
 
     def evaluate_conditions(self, simple_checks, conditions):
         for check in simple_checks:
-            if not check():
+            if callable(check):
+                check = check()
+            if not check:
                 return False
         for condition, value in conditions.items():
             if not self.checks[condition](self, value):
