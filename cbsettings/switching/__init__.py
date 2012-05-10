@@ -35,7 +35,7 @@ class Switcher(object):
         """
         if settings_class is NoSwitcher:
             def decorator(cls):
-                self.register(cls, **conditions)
+                self.register(cls, *simple_checks, **conditions)
                 return cls
             return decorator
 
