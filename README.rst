@@ -145,7 +145,12 @@ than a factory method. Here's how you use it in your settings file::
         DEBUG = True
         # etc
 
-    # You can use one of the preregistered conditions by passing kwargs...
+    class MyTestingSettings(MyProductionSettings):
+        SOME_VAR = 'whatever'
+
+    # You can use one of the preregistered conditions by passing kwargs. The
+    # first class whose conditions are all met will be used.
+    switcher.register(MyTestSettings, testing=True)
     switcher.register(MyDevSettings, hostnames=['mycompuer.home', 'billscomputer.home'])
     switcher.register(MyProductionSettings, hostnames=['theserver.com'])
 
