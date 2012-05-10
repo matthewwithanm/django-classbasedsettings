@@ -13,7 +13,7 @@ class Switcher(object):
     checks = {}
 
     def __init__(self):
-        self._registry = SortedDict()
+        self._registry = []
 
     def add_check(self, name, check):
         """Adds a checking function to the switcher."""
@@ -39,24 +39,20 @@ class Switcher(object):
                 return cls
             return decorator
 
-        if settings_class in self._registry:
-            raise AlreadyRegistered('The settings class "%s" is already'
-                    ' registered.')
-
         available_checks = self.checks.keys()
         for condition in conditions.keys():
             if condition not in available_checks:
                 raise InvalidCondition('There is no check for the condition'
                         ' "%s"' % condition)
 
-        self._registry[settings_class] = [simple_checks, conditions]
+        self._registry.append((settings_class, simple_checks, conditions))
 
     def __call__(self):
         """
         Finds the first matching settings class from the registry, and returns
         an instance of it.
         """
-        for settings_class, (simple_checks, conditions) in self._registry.items():
+        for (settings_class, simple_checks, conditions) in self._registry:
             if self.evaluate_conditions(simple_checks, conditions):
                 return settings_class()
         raise NoMatchingSettings('No settings classes matched the curent'
