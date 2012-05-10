@@ -34,6 +34,15 @@ class Switcher(object):
         """
         Register a settings class with the switcher. Can be passed the settings
         class to register or be used as a decorator.
+
+        :param settings_class: The class to register with the provided conditions.
+        :param *simple_checks: A list of conditions for using the settings
+                class. If any of the values are falsy, the class will not be
+                used. If any of the values are callable, they will be called
+                before evaluating.
+        :param **conditions: Values to check. The key specifies which of the
+                check functions (registered with ``add_check``) to use; the
+                value is passed to the check function.
         """
         if settings_class is NoSwitcher:
             def decorator(cls):

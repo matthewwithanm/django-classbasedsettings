@@ -130,9 +130,9 @@ Using Switcher
 Using a factory method to determine which settings class to use is a powerful
 feature! But usually you'll want to switch settings classes based on the same
 kinds of conditions, so django-classbasedsettings comes with a factory that'll
-handle these common cases. It also uses a more declarative syntax, which makes
-it more organized than a factory method. Here's how you use it in your settings
-file::
+handle these common cases, and allow you to easily define simple conditions of
+your own. It also uses a more declarative syntax, which makes it more organized
+than a factory method. Here's how you use it in your settings file::
 
     from cbsettings import switcher
     from cbsettings.settings import DjangoDefaults
@@ -145,22 +145,24 @@ file::
         DEBUG = True
         # etc
 
-    switcher.register(MyProductionSettings, hostnames=['theserver.com'])
+    # You can use one of the preregistered conditions by passing kwargs...
     switcher.register(MyDevSettings, hostnames=['mycompuer.home', 'billscomputer.home'])
+    switcher.register(MyProductionSettings, hostnames=['theserver.com'])
 
-You can also use ``switcher.register`` as a decorator::
+    # ...or you can define your own simple checks as positional arguments. If
+    # all of the values are truthy (and any kwarg checks pass), the class will
+    # be used.
+    switcher.register(MyDevSettings, 'dev.mysite.com' in __file__)
+    switcher.register(MyDevSettings, os.environ.get('DEV'))
 
-    from cbsettings import switcher
-    from cbsettings.settings import DjangoDefaults
+    # Callable positional arguments will be called, then checked for truthiness.
+    switcher.register(MyDevSettings, lambda: randint(1, 2) == 2)
+
+You can also use ``switcher.register`` as a class decorator::
 
     @switcher.register(hostnames=['theserver.com'])
     class MyProductionSettings(DjangoDefaults):
         DEBUG = False
-        # etc
-
-    @switcher.register(hostnames=['mycompuer.home', 'billscomputer.home'])
-    class MyDevSettings(DjangoDefaults):
-        DEBUG = True
         # etc
 
 Then, wherever you're calling ``configure``, pass it your module's ``switcher``
