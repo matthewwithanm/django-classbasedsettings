@@ -10,7 +10,7 @@ setup(
     name='django-classbasedsettings',
     description='Use classes to define settings.',
     long_description=read(os.path.join(os.path.dirname(__file__), 'README.rst')),
-    version='0.1.2',
+    version='0.2.0',
     author='Matthew Tretter',
     author_email='matthew@exanimo.com',
     url='http://github.com/matthewwithanm/django-classbasedsettings',
