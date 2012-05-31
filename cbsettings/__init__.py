@@ -6,6 +6,7 @@ import sys
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
 from .settings import DjangoDefaults
 from .switching import switcher
+from .version import *
 
 
 ENVIRONMENT_VARIABLE = 'DJANGO_SETTINGS_FACTORY'
