@@ -4,6 +4,7 @@ import imp
 import os
 import sys
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
+from .settings import DjangoDefaults
 from .switching import switcher
 
 

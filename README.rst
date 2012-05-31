@@ -44,7 +44,7 @@ Basic
 The only real change you need to make to the settings.py file that Django
 creates for you is to nest all the variables in a class::
 
-    from cbsettings.settings import DjangoDefaults
+    from cbsettings import DjangoDefaults
 
     class MySettings(DjangoDefaults):
 
@@ -134,8 +134,7 @@ handle these common cases, and allow you to easily define simple conditions of
 your own. It also uses a more declarative syntax, which makes it more organized
 than a factory method. Here's how you use it in your settings file::
 
-    from cbsettings import switcher
-    from cbsettings.settings import DjangoDefaults
+    from cbsettings import DjangoDefaults, switcher
 
     class MyProductionSettings(DjangoDefaults):
         DEBUG = False
