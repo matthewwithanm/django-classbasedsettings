@@ -9,7 +9,7 @@ class NoSwitcher:
     pass
 
 
-class Switcher(object):
+class BaseSwitcher(object):
     checks = {}
 
     def __init__(self):
@@ -70,9 +70,15 @@ class Switcher(object):
                 ' environment.')
 
 
-switcher = Switcher()
+class Switcher(BaseSwitcher):
+    def __init__(self):
+        super(Switcher, self).__init__()
 
-for k, v in vars(checks).items():
-    match = re.match(r'^check_(\w+)$', k)
-    if match and callable(v):
-        switcher.add_check(match.group(1), v)
+        # Add the default checks.
+        for k, v in vars(checks).items():
+            match = re.match(r'^check_(\w+)$', k)
+            if match and callable(v):
+                self.add_check(match.group(1), v)
+
+
+switcher = Switcher()
