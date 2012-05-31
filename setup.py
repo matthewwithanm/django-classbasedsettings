@@ -5,12 +5,14 @@ from setuptools import setup, find_packages
 
 
 read = lambda filepath: codecs.open(filepath, 'r', 'utf-8').read()
+execfile(os.path.join(os.path.dirname(__file__), 'cbsettings', 'version.py'))
+
 
 setup(
     name='django-classbasedsettings',
     description='Use classes to define settings.',
     long_description=read(os.path.join(os.path.dirname(__file__), 'README.rst')),
-    version='0.2.0',
+    version=__version__,
     author='Matthew Tretter',
     author_email='matthew@exanimo.com',
     url='http://github.com/matthewwithanm/django-classbasedsettings',
@@ -19,6 +21,11 @@ setup(
     zip_safe=False,
     keywords=['settings', 'classbased', 'class-based'],
     include_package_data=True,
+    install_requires=[
+        'nose',
+        'unittest2',
+        'Django>=1.2',
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -31,4 +38,5 @@ setup(
         'Topic :: Utilities'
     ],
     setup_requires=[],
+    test_suite='runtests.collector',
 )

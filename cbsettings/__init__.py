@@ -1,12 +1,16 @@
+import django
 from django.utils.importlib import import_module
 import imp
 import os
 import sys
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
+from .settings import DjangoDefaults
 from .switching import switcher
+from .version import *
 
 
 ENVIRONMENT_VARIABLE = 'DJANGO_SETTINGS_FACTORY'
+DJANGO_SETTINGS_MODULE = django.conf.ENVIRONMENT_VARIABLE
 
 
 def configure(factory=None, **kwargs):
@@ -47,7 +51,7 @@ def configure(factory=None, **kwargs):
         for k, v in settings_dict.items():
             setattr(module, k, v)
 
-        os.environ['DJANGO_SETTINGS_MODULE'] = settings_dict['SETTINGS_MODULE']
+        os.environ[DJANGO_SETTINGS_MODULE] = settings_dict['SETTINGS_MODULE']
 
         return mod, settings_obj
     else:
