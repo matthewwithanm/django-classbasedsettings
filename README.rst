@@ -2,6 +2,9 @@ This project allows you to define your Django project's settings using classes
 instead of modules. Among other things, this allows you to use inheritance and
 calculated properties.
 
+.. image:: https://secure.travis-ci.org/matthewwithanm/django-classbasedsettings.png?branch=develop
+   :target: http://travis-ci.org/matthewwithanm/django-classbasedsettings
+
 
 Installation
 ============
