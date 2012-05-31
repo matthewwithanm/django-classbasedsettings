@@ -19,6 +19,11 @@ setup(
     zip_safe=False,
     keywords=['settings', 'classbased', 'class-based'],
     include_package_data=True,
+    install_requires = [
+        'nose',
+        'unittest2',
+        'Django>=1.2',
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -31,4 +36,5 @@ setup(
         'Topic :: Utilities'
     ],
     setup_requires=[],
+    test_suite='runtests.collector',
 )
