@@ -1,4 +1,3 @@
-from django.utils.datastructures import SortedDict
 import re
 from ..exceptions import InvalidCondition, NoMatchingSettings
 from . import checks
