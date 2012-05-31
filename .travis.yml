@@ -10,9 +10,6 @@ branches:
   only:
     - develop
 install:
-  - pip install -e .
-  - pip install -r requirements/tests.txt Django==$DJANGO
-install:
   - pip install Django==$DJANGO --use-mirrors
   - pip install -e . --use-mirrors
 script:
