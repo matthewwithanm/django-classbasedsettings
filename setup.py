@@ -21,9 +21,11 @@ setup(
     zip_safe=False,
     keywords=['settings', 'classbased', 'class-based'],
     include_package_data=True,
-    install_requires=[
+    tests_require=[
         'nose',
         'unittest2',
+    ],
+    install_requires=[
         'Django>=1.2',
     ],
     classifiers=[
