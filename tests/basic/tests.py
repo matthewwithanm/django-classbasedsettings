@@ -24,3 +24,9 @@ class BasicTestCase(unittest.TestCase):
     def test_django_defaults(self):
         settings = load_settings('tests.test_settings.A')
         self.assertTrue(hasattr(settings, 'INSTALLED_APPS'))
+
+    def test_attr_access(self):
+        settings = load_settings('tests.test_settings.A')
+        parent_name, module_name = settings.SETTINGS_MODULE.rsplit('.', 1)
+        parent = __import__(parent_name, fromlist=[''])
+        getattr(parent, module_name)

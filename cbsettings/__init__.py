@@ -39,13 +39,19 @@ def configure(factory=None, **kwargs):
 
         # Create the settings module.
         parts = settings_dict['SETTINGS_MODULE'].split('.')
-        for module_name in map(lambda x: '.'.join(x), [parts[0:i + 1] for i in
-                range(len(parts))]):
+        parent_module = None
+        for i in range(len(parts)):
+            module_fullname = '.'.join(parts[:i + 1])
+            module_name = parts[i]
             try:
-                module = __import__(module_name, fromlist=[''])
+                module = __import__(module_fullname, fromlist=[''])
             except ImportError:
-                module = imp.new_module(module_name)
-                sys.modules[module_name] = module
+                module = imp.new_module(module_fullname)
+                sys.modules[module_fullname] = module
+
+            if parent_module:
+                setattr(parent_module, module_name, module)
+            parent_module = module
 
         # Unroll the settings into a new module.
         for k, v in settings_dict.items():
