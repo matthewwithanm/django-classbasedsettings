@@ -119,9 +119,21 @@ Callable properties are automatically called::
     class MySettings(DjangoDefaults):
 
         @callable_setting
-        def SOME_SETTING(*args, **kwargs):
+        def SOME_SETTING(self, *args, **kwargs):
             # This setting is actually a callable. The decorator tells cbsettings
             # not to invoke it to get a settings value.
+            .
+            .
+            .
+
+You can also prevent your callable settings from receiveing a "self" argument::
+
+    from cbsettings import callable_setting
+
+    class MySettings(DjangoDefaults):
+
+        @callable_setting(takes_self=False)
+        def SOME_SETTING(*args, **kwargs):
             .
             .
             .
