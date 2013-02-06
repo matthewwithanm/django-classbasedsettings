@@ -5,16 +5,21 @@ from setuptools import setup, find_packages
 
 
 read = lambda filepath: codecs.open(filepath, 'r', 'utf-8').read()
-execfile(os.path.join(os.path.dirname(__file__), 'cbsettings', 'version.py'))
+
+
+# Load package meta from the pkgmeta module without loading imagekit.
+pkgmeta = {}
+execfile(os.path.join(os.path.dirname(__file__),
+         'cbsettings', 'pkgmeta.py'), pkgmeta)
 
 
 setup(
     name='django-classbasedsettings',
     description='Use classes to define settings.',
     long_description=read(os.path.join(os.path.dirname(__file__), 'README.rst')),
-    version=__version__,
-    author='Matthew Tretter',
-    author_email='matthew@exanimo.com',
+    version=pkgmeta['__version__'],
+    author=pkgmeta['__author__'],
+    author_email='m@tthewwithanm.com',
     url='http://github.com/matthewwithanm/django-classbasedsettings',
     download_url='http://github.com/matthewwithanm/django-classbasedsettings/tarball/master',
     packages=find_packages(),

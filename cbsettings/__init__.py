@@ -7,7 +7,7 @@ from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
 from .decorators import callable_setting
 from .settings import DjangoDefaults
 from .switching import switcher
-from cbsettings.version import *
+from cbsettings.pkgmeta import *
 
 
 ENVIRONMENT_VARIABLE = 'DJANGO_SETTINGS_FACTORY'
