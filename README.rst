@@ -24,17 +24,28 @@ to instead call ``cbsettings.configure``. So your manage.py will look something
 like this::
 
     #!/usr/bin/env python
+    import os
     import sys
     import cbsettings
 
     if __name__ == "__main__":
-        cbsettings.configure('path.to.MySettings')
+        os.environ.setdefault('DJANGO_SETTINGS_FACTORY', 'path.to.MySettings')
+        cbsettings.configure()
 
         from django.core.management import execute_from_command_line
 
         execute_from_command_line(sys.argv)
 
-You'll have to make a similar modification to your wsgi file.
+You'll have to make a similar modification to your wsgi file::
+
+    import os
+    import cbsettings
+    from django.core.wsgi import get_wsgi_application
+
+    os.environ.setdefault('DJANGO_SETTINGS_FACTORY', 'path.to.MySettings')
+    cbsettings.configure()
+
+    application = get_wsgi_application()
 
 
 Usage
