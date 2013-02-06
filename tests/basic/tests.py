@@ -30,3 +30,20 @@ class BasicTestCase(unittest.TestCase):
         parent_name, module_name = settings.SETTINGS_MODULE.rsplit('.', 1)
         parent = __import__(parent_name, fromlist=[''])
         getattr(parent, module_name)
+
+
+class CallableSettingsTests(unittest.TestCase):
+
+    def test_autocall(self):
+        settings = load_settings('tests.test_settings.CallableSettings')
+        self.assertTrue(settings.F1)
+
+    def test_donotcall(self):
+        settings = load_settings('tests.test_settings.CallableSettings')
+        value = settings.F2()
+        self.assertTrue(value)
+
+    def test_donotcall_noself(self):
+        settings = load_settings('tests.test_settings.CallableSettings')
+        value = settings.F3()
+        self.assertTrue(value)

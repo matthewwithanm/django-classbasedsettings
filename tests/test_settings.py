@@ -1,4 +1,4 @@
-from cbsettings import DjangoDefaults
+from cbsettings import DjangoDefaults, callable_setting
 from cbsettings.switching import Switcher
 
 
@@ -16,6 +16,20 @@ class Parent(DjangoDefaults):
 
 class Child(Parent):
     CHILD_ATTR = True
+
+
+class CallableSettings(DjangoDefaults):
+
+    def F1(self):
+        return True
+
+    @callable_setting
+    def F2(self):
+        return True
+
+    @callable_setting(takes_self=False)
+    def F3():
+        return True
 
 
 # Used to verify hostnames check
