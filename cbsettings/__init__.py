@@ -4,6 +4,7 @@ import imp
 import os
 import sys
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
+from .decorators import callable_setting
 from .settings import DjangoDefaults
 from .switching import switcher
 from cbsettings.version import *
@@ -55,6 +56,8 @@ def configure(factory=None, **kwargs):
 
         # Unroll the settings into a new module.
         for k, v in settings_dict.items():
+            if callable(v) and not getattr(v, 'is_callable_setting', False):
+                v = v()
             setattr(module, k, v)
 
         os.environ[DJANGO_SETTINGS_MODULE] = settings_dict['SETTINGS_MODULE']
