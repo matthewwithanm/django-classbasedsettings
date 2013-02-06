@@ -1,4 +1,5 @@
 from django.conf import global_settings
+from .decorators import callable_setting
 
 
 class DjangoDefaults(object):
@@ -7,4 +8,7 @@ class DjangoDefaults(object):
 
 for attr in vars(global_settings):
     if not attr.startswith('_'):
-        setattr(DjangoDefaults, attr, getattr(global_settings, attr))
+        value = getattr(global_settings, attr)
+        if callable(value):
+            value = callable_setting(value)
+        setattr(DjangoDefaults, attr, value)

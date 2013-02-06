@@ -106,6 +106,38 @@ These are just normal Python classes, so you can do anything you normally can::
 
         # etc
 
+Callable properties are automatically called::
+
+    class MySettings(DjangoDefaults):
+
+        TEMPLATE_DEBUG = lambda s: s.DEBUG
+
+\...unless you don't want them to be::
+
+    from cbsettings import callable_setting
+
+    class MySettings(DjangoDefaults):
+
+        @callable_setting
+        def SOME_SETTING(self, *args, **kwargs):
+            # This setting is actually a callable. The decorator tells cbsettings
+            # not to invoke it to get a settings value.
+            .
+            .
+            .
+
+You can also prevent your callable settings from receiveing a "self" argument::
+
+    from cbsettings import callable_setting
+
+    class MySettings(DjangoDefaults):
+
+        @callable_setting(takes_self=False)
+        def SOME_SETTING(*args, **kwargs):
+            .
+            .
+            .
+
 
 Using a Settings Factory
 ------------------------
