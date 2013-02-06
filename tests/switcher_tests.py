@@ -43,10 +43,10 @@ def test_hostname_nomatch():
 @with_setup(patch_hostname, unpatch_hostname)
 def test_simple_checks():
     settings = load_settings('tests.test_settings.switcher_c')
-    assert_raises(getattr(settings, 'IS_A', False))
+    assert_true(getattr(settings, 'IS_A', False))
 
 
 @with_setup(patch_hostname, unpatch_hostname)
 def test_simple_callable_checks():
     settings = load_settings('tests.test_settings.switcher_d')
-    assert_raises(getattr(settings, 'IS_A', False))
+    assert_true(getattr(settings, 'IS_A', False))
