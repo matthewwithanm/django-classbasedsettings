@@ -4,6 +4,13 @@ import os
 from setuptools import setup, find_packages
 
 
+# Workaround for multiprocessing/nose issue. See http://bugs.python.org/msg170215
+try:
+    import multiprocessing
+except ImportError:
+    pass
+
+
 read = lambda filepath: codecs.open(filepath, 'r', 'utf-8').read()
 
 
@@ -45,5 +52,5 @@ setup(
         'Topic :: Utilities'
     ],
     setup_requires=[],
-    test_suite='runtests.collector',
+    test_suite='nose.core.collector',
 )
