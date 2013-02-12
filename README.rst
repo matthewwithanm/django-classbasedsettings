@@ -149,7 +149,7 @@ real settings class.
 
 ``PrefixedSettings`` will apply an arbitrary prefix, which can be provided via
 a Meta class. If none is specified, it will extract the prefix from the class
-name:
+name::
 
     from cbsettings import PrefixedSettings
 
@@ -158,7 +158,7 @@ name:
 
 The above will result in a setting named ``MY_FANCY_VALUE``. (You would get the
 same result by naming the class ``MyFancy``—without the "Settings" suffix.) If a
-prefix is specified, it will be used without manipulation. In other words,
+prefix is specified, it will be used without manipulation. In other word::
 
     class MyFancySettings(PrefixedSettings):
         VALUE = 5
@@ -168,9 +168,9 @@ prefix is specified, it will be used without manipulation. In other words,
 
 will result in a setting named ``helloVALUE``.
 
- ``AppSettings`` is similar, but it uses a different Meta attribute and does a
- little extra formatting. In most cases, you'll want to use ``AppSettings`` and
- not ``PrefixedSettings``.
+``AppSettings`` is similar, but it uses a different Meta attribute and does a
+little extra formatting. In most cases, you'll want to use ``AppSettings`` and
+not ``PrefixedSettings``::
 
     from cbsettings import AppSettings
 
@@ -179,7 +179,7 @@ will result in a setting named ``helloVALUE``.
 
 will result in a setting named ``MY_APP_VALUE``. (You would get the same result
 by naming the class ``MyApp``—without the "Settings" suffix.) If an app name is
-provided explicitly, it will be uppercased and an underscore will be appended:
+provided explicitly, it will be uppercased and an underscore will be appended::
 
     class MyAppSettings(AppSettings):
         VALUE = 5
