@@ -26,7 +26,7 @@ def test_hostname_switch():
     Test that the hostname switch works correctly.
 
     """
-    settings = load_settings('tests.test_settings.switcher_a')
+    settings = load_settings('tests.settings.switcher_a')
     assert_true(getattr(settings, 'IS_A', False))
 
 
@@ -37,16 +37,16 @@ def test_hostname_nomatch():
 
     """
     assert_raises(NoMatchingSettings, load_settings,
-            'tests.test_settings.switcher_b')
+            'tests.settings.switcher_b')
 
 
 @with_setup(patch_hostname, unpatch_hostname)
 def test_simple_checks():
-    settings = load_settings('tests.test_settings.switcher_c')
+    settings = load_settings('tests.settings.switcher_c')
     assert_true(getattr(settings, 'IS_A', False))
 
 
 @with_setup(patch_hostname, unpatch_hostname)
 def test_simple_callable_checks():
-    settings = load_settings('tests.test_settings.switcher_d')
+    settings = load_settings('tests.settings.switcher_d')
     assert_true(getattr(settings, 'IS_A', False))
