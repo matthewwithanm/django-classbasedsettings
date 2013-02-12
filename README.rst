@@ -139,6 +139,57 @@ You can also prevent your callable settings from receiveing a "self" argument::
             .
 
 
+Per-App Mixins
+--------------
+
+Two classes are provided to save you from having to type out long setting names:
+``PrefixedSettings`` and ``Appsettings``. These are meant for declaring subsets
+of your settings which share a prefix. The classes can then be mixed into your
+real settings class.
+
+``PrefixedSettings`` will apply an arbitrary prefix, which can be provided via
+a Meta class. If none is specified, it will extract the prefix from the class
+name:
+
+    from cbsettings import PrefixedSettings
+
+    class MyFancySettings(PrefixedSettings):
+        VALUE = 5
+
+The above will result in a setting named ``MY_FANCY_VALUE``. (You would get the
+same result by naming the class ``MyFancy``—without the "Settings" suffix.) If a
+prefix is specified, it will be used without manipulation. In other words,
+
+    class MyFancySettings(PrefixedSettings):
+        VALUE = 5
+
+        class Meta:
+            prefix = 'hello'
+
+will result in a setting named ``helloVALUE``.
+
+ ``AppSettings`` is similar, but it uses a different Meta attribute and does a
+ little extra formatting. In most cases, you'll want to use ``AppSettings`` and
+ not ``PrefixedSettings``.
+
+    from cbsettings import AppSettings
+
+    class MyAppSettings(AppSettings):
+        VALUE = 5
+
+will result in a setting named ``MY_APP_VALUE``. (You would get the same result
+by naming the class ``MyApp``—without the "Settings" suffix.) If an app name is
+provided explicitly, it will be uppercased and an underscore will be appended:
+
+    class MyAppSettings(AppSettings):
+        VALUE = 5
+
+        class Meta:
+            app_name = 'somebody_elses_app'
+
+will result in a setting named ``SOMEBODY_ELSES_APP_VALUE``.
+
+
 Using a Settings Factory
 ------------------------
 
