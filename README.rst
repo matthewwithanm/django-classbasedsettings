@@ -126,7 +126,7 @@ Callable properties are automatically called::
             .
             .
 
-You can also prevent your callable settings from receiveing a "self" argument::
+You can also prevent your callable settings from receiving a "self" argument::
 
     from cbsettings import callable_setting
 
