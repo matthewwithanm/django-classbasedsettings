@@ -5,7 +5,7 @@ import os
 import sys
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
 from .decorators import callable_setting
-from .settings import DjangoDefaults
+from .settings import DjangoDefaults, AppSettings, PrefixedSettings
 from .switching import switcher
 from cbsettings.pkgmeta import *
 
