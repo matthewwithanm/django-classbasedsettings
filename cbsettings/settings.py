@@ -43,18 +43,30 @@ def get_prefix(attrs, class_name, use_app_name=False):
 
 class PrefixedSettingsBase(type):
     def __new__(cls, name, bases, attrs):
-        prefix = get_prefix(attrs, name)
-        new_attrs = prefix_attributes(prefix, attrs)
-        return super(PrefixedSettingsBase, cls).__new__(cls, name, bases,
-                                                        new_attrs)
+        try:
+            PrefixedSettings
+        except NameError:
+            # Creating the PrefixedSettings class. Continue.
+            pass
+        else:
+            if PrefixedSettings in bases:
+                prefix = get_prefix(attrs, name)
+                attrs = prefix_attributes(prefix, attrs)
+        return super(PrefixedSettingsBase, cls).__new__(cls, name, bases, attrs)
 
 
 class AppSettingsBase(type):
     def __new__(cls, name, bases, attrs):
-        prefix = get_prefix(attrs, name, use_app_name=True)
-        new_attrs = prefix_attributes(prefix, attrs)
-        return super(AppSettingsBase, cls).__new__(cls, name, bases,
-                                                   new_attrs)
+        try:
+            AppSettings
+        except NameError:
+            # Creating the AppSettings class. Continue.
+            pass
+        else:
+            if AppSettings in bases:
+                prefix = get_prefix(attrs, name, use_app_name=True)
+                attrs = prefix_attributes(prefix, attrs)
+        return super(AppSettingsBase, cls).__new__(cls, name, bases, attrs)
 
 
 class PrefixedSettings(object):
