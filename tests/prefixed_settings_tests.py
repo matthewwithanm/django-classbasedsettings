@@ -32,6 +32,10 @@ class OtherApp(AppSettings):
         app_name = 'special'
 
 
+class PrefixedSettingsSubclass(SomeSettings):
+    UNPREFIXED = True
+
+
 def test_prefixedsettings_classname():
     obj = Some()
     assert_true('SOME_VALUE' in dir(obj))
@@ -60,3 +64,8 @@ def test_appsettings_suffixed_classname():
 def test_appsettings_explicit_name():
     obj = OtherApp()
     assert_true('SPECIAL_VALUE' in dir(obj))
+
+
+def test_mixin():
+    obj = PrefixedSettingsSubclass()
+    assert_true('UNPREFIXED' in dir(obj))
