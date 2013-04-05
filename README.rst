@@ -126,6 +126,9 @@ Callable properties are automatically called::
             .
             .
 
+        # You can also use the decorator with functions defined elsewhere
+        SOME_OTHER_SETTING = callable_setting(my_function)
+
 You can also prevent your callable settings from receiving a "self" argument::
 
     from cbsettings import callable_setting
@@ -137,6 +140,8 @@ You can also prevent your callable settings from receiving a "self" argument::
             .
             .
             .
+
+        SOME_OTHER_SETTING = callable_setting(takes_self=False)(my_function)
 
 
 Per-App Mixins
