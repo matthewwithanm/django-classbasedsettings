@@ -29,12 +29,14 @@ class BaseSwitcher(object):
                 return False
         return True
 
-    def register(self, settings_class=NoSwitcher, *simple_checks, **conditions):
+    def register(self, settings_class=NoSwitcher, *simple_checks,
+                 **conditions):
         """
         Register a settings class with the switcher. Can be passed the settings
         class to register or be used as a decorator.
 
-        :param settings_class: The class to register with the provided conditions.
+        :param settings_class: The class to register with the provided
+                conditions.
         :param *simple_checks: A list of conditions for using the settings
                 class. If any of the values are falsy, the class will not be
                 used. If any of the values are callable, they will be called
@@ -52,8 +54,8 @@ class BaseSwitcher(object):
         available_checks = self.checks.keys()
         for condition in conditions.keys():
             if condition not in available_checks:
-                raise InvalidCondition('There is no check for the condition'
-                        ' "%s"' % condition)
+                raise InvalidCondition(
+                    'There is no check for the condition "%s"' % condition)
 
         self._registry.append((settings_class, simple_checks, conditions))
 
@@ -66,7 +68,7 @@ class BaseSwitcher(object):
             if self.evaluate_conditions(simple_checks, conditions):
                 return settings_class()
         raise NoMatchingSettings('No settings classes matched the curent'
-                ' environment.')
+                                 ' environment.')
 
 
 class Switcher(BaseSwitcher):

@@ -52,7 +52,8 @@ class PrefixedSettingsBase(type):
             if PrefixedSettings in bases:
                 prefix = get_prefix(attrs, name)
                 attrs = prefix_attributes(prefix, attrs)
-        return super(PrefixedSettingsBase, cls).__new__(cls, name, bases, attrs)
+        return super(PrefixedSettingsBase, cls).__new__(cls, name, bases,
+                                                        attrs)
 
 
 class AppSettingsBase(type):

@@ -37,7 +37,7 @@ def test_hostname_nomatch():
 
     """
     assert_raises(NoMatchingSettings, load_settings,
-            'tests.settings.switcher_b')
+                  'tests.settings.switcher_b')
 
 
 @with_setup(patch_hostname, unpatch_hostname)

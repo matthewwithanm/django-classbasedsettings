@@ -4,7 +4,8 @@ from .utils import load_settings
 
 def test_load():
     """
-    Test that class based settings can be loading (and also verify that our method of unloading settings is working!)
+    Test that class based settings can be loading (and also verify that our
+    method of unloading settings is working!)
 
     """
     settings = load_settings('tests.settings.A')
