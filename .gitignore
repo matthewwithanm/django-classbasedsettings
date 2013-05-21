@@ -1,0 +1,8 @@
+*.db
+*.egg*
+*.orig
+*.pyc
+.DS_Store
+.tox
+/venv
+/.env
