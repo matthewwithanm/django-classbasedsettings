@@ -1,10 +1,10 @@
 import django
 from django.utils.importlib import import_module
-import imp
 import os
 import sys
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
 from .decorators import callable_setting
+from .importers import SettingsImporter
 from .settings import DjangoDefaults, AppSettings, PrefixedSettings
 from .switching import switcher
 from cbsettings.pkgmeta import *
@@ -38,27 +38,12 @@ def configure(factory=None, **kwargs):
             settings_dict['SETTINGS_MODULE'] = '%s_%s_unrolledcbsettings' % (
                     factory_module, factory_name)
 
-        # Create the settings module.
-        parts = settings_dict['SETTINGS_MODULE'].split('.')
-        parent_module = None
-        for i in range(len(parts)):
-            module_fullname = '.'.join(parts[:i + 1])
-            module_name = parts[i]
-            try:
-                module = __import__(module_fullname, fromlist=[''])
-            except ImportError:
-                module = imp.new_module(module_fullname)
-                sys.modules[module_fullname] = module
-
-            if parent_module:
-                setattr(parent_module, module_name, module)
-            parent_module = module
-
-        # Unroll the settings into a new module.
-        for k, v in settings_dict.items():
-            if callable(v) and not getattr(v, 'is_callable_setting', False):
-                v = v()
-            setattr(module, k, v)
+        # Create an importer for handling imports of our constructed settings
+        # module.
+        sys.meta_path.insert(
+            0,
+            SettingsImporter(settings_dict['SETTINGS_MODULE'], settings_dict)
+        )
 
         os.environ[DJANGO_SETTINGS_MODULE] = settings_dict['SETTINGS_MODULE']
 
