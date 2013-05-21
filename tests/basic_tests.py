@@ -31,3 +31,9 @@ def test_attr_access():
     parent_name, module_name = settings.SETTINGS_MODULE.rsplit('.', 1)
     parent = __import__(parent_name, fromlist=[''])
     getattr(parent, module_name)
+
+
+def test_reload():
+    settings = load_settings('tests.settings.A')
+    module = __import__(settings.SETTINGS_MODULE, fromlist=[''])
+    reload(module)
