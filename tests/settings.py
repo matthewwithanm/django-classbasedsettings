@@ -2,15 +2,19 @@ from cbsettings import DjangoDefaults, callable_setting
 from cbsettings.switching import Switcher
 
 
-class A(DjangoDefaults):
+class BaseSettings(DjangoDefaults):
+    SECRET_KEY = '_m(ehd2mquv6hj4wjn*d*d0b@z8-h(=ot!2d@3#=t+#qsfml3g'
+
+
+class A(BaseSettings):
     IS_A = True
 
 
-class B(DjangoDefaults):
+class B(BaseSettings):
     IS_B = True
 
 
-class Parent(DjangoDefaults):
+class Parent(BaseSettings):
     PARENT_ATTR = True
 
 
@@ -18,7 +22,7 @@ class Child(Parent):
     CHILD_ATTR = True
 
 
-class CallableSettings(DjangoDefaults):
+class CallableSettings(BaseSettings):
 
     def F1(self):
         return True
