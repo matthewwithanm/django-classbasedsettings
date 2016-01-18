@@ -1,7 +1,13 @@
-import django
-from django.utils.importlib import import_module
 import os
 import sys
+
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module
+
+import django
+
 from .exceptions import InvalidSettingsFactory, SettingsFactoryDoesNotExist
 from .decorators import callable_setting  # noqa
 from .importers import SettingsImporter
