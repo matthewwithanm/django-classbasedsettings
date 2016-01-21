@@ -16,8 +16,8 @@ read = lambda filepath: codecs.open(filepath, 'r', 'utf-8').read()
 
 # Load package meta from the pkgmeta module without loading imagekit.
 pkgmeta = {}
-execfile(os.path.join(os.path.dirname(__file__),
-         'cbsettings', 'pkgmeta.py'), pkgmeta)
+metapath = os.path.join(os.path.dirname(__file__), 'cbsettings', 'pkgmeta.py')
+exec(compile(open(metapath, 'rb').read(), metapath, 'exec'), pkgmeta)
 
 
 setup(
