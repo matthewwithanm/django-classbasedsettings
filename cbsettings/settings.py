@@ -1,6 +1,7 @@
 from django.conf import global_settings
 import re
 from .decorators import callable_setting
+from future.utils import with_metaclass
 
 
 prefix_pattern = re.compile(r'(?P<prefix>.*?)(Settings)?$')
@@ -70,9 +71,9 @@ class AppSettingsBase(type):
         return super(AppSettingsBase, cls).__new__(cls, name, bases, attrs)
 
 
-class PrefixedSettings(object):
-    __metaclass__ = PrefixedSettingsBase
+class PrefixedSettings(with_metaclass(PrefixedSettingsBase, object)):
+    pass
 
 
-class AppSettings(object):
-    __metaclass__ = AppSettingsBase
+class AppSettings(with_metaclass(AppSettingsBase, object)):
+    pass
