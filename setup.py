@@ -16,8 +16,8 @@ read = lambda filepath: codecs.open(filepath, 'r', 'utf-8').read()
 
 # Load package meta from the pkgmeta module without loading imagekit.
 pkgmeta = {}
-execfile(os.path.join(os.path.dirname(__file__),
-         'cbsettings', 'pkgmeta.py'), pkgmeta)
+metapath = os.path.join(os.path.dirname(__file__), 'cbsettings', 'pkgmeta.py')
+exec(compile(open(metapath, 'rb').read(), metapath, 'exec'), pkgmeta)
 
 
 setup(
@@ -38,7 +38,8 @@ setup(
         'unittest2',
     ],
     install_requires=[
-        'Django>=1.2',
+        'Django>=1.8',
+        'future>=0.15',
     ],
     classifiers=[
         'Environment :: Web Environment',
@@ -46,9 +47,8 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.5',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
         'Topic :: Utilities'
     ],
     setup_requires=[],

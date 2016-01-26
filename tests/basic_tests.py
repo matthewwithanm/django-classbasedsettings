@@ -1,5 +1,6 @@
 from nose.tools import assert_true, assert_false
 from .utils import load_settings
+from imp import reload
 
 
 def test_load():

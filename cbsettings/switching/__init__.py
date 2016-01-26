@@ -3,7 +3,7 @@ from ..exceptions import InvalidCondition, NoMatchingSettings
 from . import checks
 
 
-class NoSwitcher:
+class NoSwitcher(object):
     """Used as a sentinel argument for Switcher.register"""
     pass
 

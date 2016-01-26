@@ -1,4 +1,5 @@
 import cbsettings
+from imp import reload
 
 
 def unload_settings():

@@ -9,7 +9,9 @@ calculated properties.
 Installation
 ============
 
-The easiest way to install is by using pip::
+The easiest way to install is by using pip:
+
+.. code-block:: sh
 
     pip install django-classbasedsettings
 
@@ -21,7 +23,9 @@ Setup
 
 The places where you're currently setting ``DJANGO_SETTINGS_MODULE``, you'll have
 to instead call ``cbsettings.configure``. So your manage.py will look something
-like this::
+like this:
+
+.. code-block:: python
 
     #!/usr/bin/env python
     import os
@@ -36,7 +40,9 @@ like this::
 
         execute_from_command_line(sys.argv)
 
-You'll have to make a similar modification to your wsgi file::
+You'll have to make a similar modification to your wsgi file:
+
+.. code-block:: python
 
     import os
     import cbsettings
@@ -56,7 +62,9 @@ Basic
 -----
 
 The only real change you need to make to the settings.py file that Django
-creates for you is to nest all the variables in a class::
+creates for you is to nest all the variables in a class:
+
+.. code-block:: python
 
     from cbsettings import DjangoDefaults
 
@@ -85,7 +93,9 @@ Notice that the class extends ``DjangoDefaults``. By inheriting from this class,
 you get all the default settings values that Django normally composites your
 settings with. (These are pulled in from ``django.conf.global_settings`` so
 they'll track with your version of Django, not classbasedsettings.) You can
-also do stuff like this::
+also do stuff like this:
+
+.. code-block:: python
 
     class MySettings(DjangoDefaults):
 
@@ -95,7 +105,9 @@ also do stuff like this::
 
         # etc
 
-These are just normal Python classes, so you can do anything you normally can::
+These are just normal Python classes, so you can do anything you normally can:
+
+.. code-block:: python
 
     class MySettings(DjangoDefaults):
 
@@ -106,13 +118,17 @@ These are just normal Python classes, so you can do anything you normally can::
 
         # etc
 
-Callable properties are automatically called::
+Callable properties are automatically called:
+
+.. code-block:: python
 
     class MySettings(DjangoDefaults):
 
         TEMPLATE_DEBUG = lambda s: s.DEBUG
 
-\...unless you don't want them to be::
+...unless you don't want them to be:
+
+.. code-block:: python
 
     from cbsettings import callable_setting
 
@@ -129,7 +145,9 @@ Callable properties are automatically called::
         # You can also use the decorator with functions defined elsewhere
         SOME_OTHER_SETTING = callable_setting(my_function)
 
-You can also prevent your callable settings from receiving a "self" argument::
+You can also prevent your callable settings from receiving a "self" argument:
+
+.. code-block:: python
 
     from cbsettings import callable_setting
 
@@ -154,7 +172,9 @@ real settings class.
 
 ``PrefixedSettings`` will apply an arbitrary prefix, which can be provided via
 a Meta class. If none is specified, it will extract the prefix from the class
-name::
+name:
+
+.. code-block:: python
 
     from cbsettings import PrefixedSettings
 
@@ -163,7 +183,9 @@ name::
 
 The above will result in a setting named ``MY_FANCY_VALUE``. (You would get the
 same result by naming the class ``MyFancy``—without the "Settings" suffix.) If a
-prefix is specified, it will be used without manipulation. In other word::
+prefix is specified, it will be used without manipulation. In other word:
+
+.. code-block:: python
 
     class MyFancySettings(PrefixedSettings):
         VALUE = 5
@@ -175,7 +197,9 @@ will result in a setting named ``helloVALUE``.
 
 ``AppSettings`` is similar, but it uses a different Meta attribute and does a
 little extra formatting. In most cases, you'll want to use ``AppSettings`` and
-not ``PrefixedSettings``::
+not ``PrefixedSettings``:
+
+.. code-block:: python
 
     from cbsettings import AppSettings
 
@@ -184,7 +208,9 @@ not ``PrefixedSettings``::
 
 will result in a setting named ``MY_APP_VALUE``. (You would get the same result
 by naming the class ``MyApp``—without the "Settings" suffix.) If an app name is
-provided explicitly, it will be uppercased and an underscore will be appended::
+provided explicitly, it will be uppercased and an underscore will be appended:
+
+.. code-block:: python
 
     class MyAppSettings(AppSettings):
         VALUE = 5
@@ -201,7 +227,9 @@ Using a Settings Factory
 You might be thinking that hardcoding your settings class into files is just as
 bad as Django's hardcoding of the settings module. That's true. Which is why
 ``configure()`` can be passed the path to any callable that returns a settings
-object instance. So your manage.py might instead look like this::
+object instance. So your manage.py might instead look like this:
+
+.. code-block:: python
 
     #!/usr/bin/env python
     import sys
@@ -214,7 +242,9 @@ object instance. So your manage.py might instead look like this::
 
         execute_from_command_line(sys.argv)
 
-Then, in ``path/to/my/settings.py``::
+Then, in ``path/to/my/settings.py``:
+
+.. code-block:: python
 
     def factory():
         if 'DEV' in os.environ:
@@ -234,7 +264,9 @@ feature! But usually you'll want to switch settings classes based on the same
 kinds of conditions, so django-classbasedsettings comes with a factory that'll
 handle these common cases, and allow you to easily define simple conditions of
 your own. It also uses a more declarative syntax, which makes it more organized
-than a factory method. Here's how you use it in your settings file::
+than a factory method. Here's how you use it in your settings file:
+
+.. code-block:: python
 
     from cbsettings import DjangoDefaults, switcher
 
@@ -264,7 +296,9 @@ than a factory method. Here's how you use it in your settings file::
     # Callable positional arguments will be called, then checked for truthiness.
     switcher.register(MyDevSettings, lambda: randint(1, 2) == 2)
 
-You can also use ``switcher.register`` as a class decorator::
+You can also use ``switcher.register`` as a class decorator:
+
+.. code-block:: python
 
     @switcher.register(hostnames=['theserver.com'])
     class MyProductionSettings(DjangoDefaults):
@@ -272,6 +306,8 @@ You can also use ``switcher.register`` as a class decorator::
         # etc
 
 Then, wherever you're calling ``configure``, pass it your module's ``switcher``
-variable::
+variable:
+
+.. code-block:: python
 
     cbsettings.configure('path.to.my.settings.switcher')

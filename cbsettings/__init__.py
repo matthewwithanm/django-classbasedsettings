@@ -1,3 +1,4 @@
+from builtins import str
 import os
 import sys
 
@@ -33,7 +34,7 @@ def configure(factory=None, **kwargs):
         try:
             mod = import_module(factory_module)
             factory_obj = getattr(mod, factory_name)
-        except (ImportError, AttributeError), err:
+        except (ImportError, AttributeError) as err:
             raise SettingsFactoryDoesNotExist(
                 'The object "%s" could not be found (Is it on sys.path?):'
                 ' %s' % (factory, err))

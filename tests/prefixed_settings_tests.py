@@ -13,7 +13,7 @@ class SomeSettings(PrefixedSettings):
 class OtherSettings(PrefixedSettings):
     VALUE = True
 
-    class Meta:
+    class Meta(object):
         prefix = 'special_'
 
 
@@ -28,7 +28,7 @@ class MyAppSettings(AppSettings):
 class OtherApp(AppSettings):
     VALUE = True
 
-    class Meta:
+    class Meta(object):
         app_name = 'special'
 
 
